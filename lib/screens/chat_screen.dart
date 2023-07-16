@@ -26,6 +26,7 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,57 +51,32 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Widget _buildMessageList() {
-  return StreamBuilder<QuerySnapshot>(
-    stream: _chatService.getMessages(
-      widget.receiveUserID,
-      _firebaseAuth.currentUser!.uid,
-    ),
-    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-      if (snapshot.hasError) {
-        return Text('Error: ${snapshot.error}');
-      } else if (snapshot.connectionState == ConnectionState.waiting) {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-        return const Text('No messages');
-      } else {
-        return ListView.builder(
-          itemCount: snapshot.data!.docs.length,
-          itemBuilder: (BuildContext context, int index) {
-            return _buildMessageItem(snapshot.data!.docs[index]);
-          },
-        );
-      }
-    },
-  );
-}
-
-
-  // build message list
-  // Widget _buildMessageList() {
-  //   return StreamBuilder(
-  //     stream: _chatService.getMessages(
-  //         widget.receiveUserID, _firebaseAuth.currentUser!.uid),
-  //     builder: (BuildContext context, AsyncSnapshot snapshot) {
-  //       if (snapshot.hasError) {
-  //         return Text('Error${snapshot.error}');
-  //       } else if (snapshot.connectionState == ConnectionState.waiting) {
-  //         return const Center(
-  //           child: CircularProgressIndicator(),
-  //         );
-  //       } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-  //         return const Text('No messages');
-  //       } else {
-  //         return ListView(
-  //           children: snapshot.data!.docs
-  //               .map((document) => _buildMessageItem(document))
-  //               .toList(),
-  //         );
-  //       }
-  //     },
-  //   );
-  // }
+    return StreamBuilder<QuerySnapshot>(
+      stream: _chatService.getMessages(
+        widget.receiveUserID,
+        _firebaseAuth.currentUser!.uid,
+      ),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+          return const Text('No messages');
+        } else {
+          return ListView.builder(
+            itemCount: snapshot.data!.docs.length,
+            itemBuilder: (BuildContext context, int index) {
+              final document = snapshot.data!.docs[index];
+              return _buildMessageItem(document);
+            },
+          );
+        }
+      },
+    );
+  }
 
   // build message item
   Widget _buildMessageItem(DocumentSnapshot document) {
@@ -129,7 +105,10 @@ class _ChatScreenState extends State<ChatScreen> {
             const SizedBox(
               height: 5,
             ),
-            ChatBubble(message: data['message'])
+            ChatBubble(
+              message: data['message'],
+              timestamp: data['timestamp'].toDate(),
+            )
           ],
         ),
       ),
