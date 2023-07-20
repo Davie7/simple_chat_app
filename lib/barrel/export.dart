@@ -17,5 +17,6 @@ export 'package:chat_app/services/chat/chat_service.dart';
 export 'package:chat_app/utils/chat_bubble.dart';
 export 'package:chat_app/screens/chat_screen.dart';
 export 'package:intl/intl.dart'hide TextDirection;
+export 'package:google_sign_in/google_sign_in.dart';
 
 

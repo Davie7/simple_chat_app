@@ -1,3 +1,5 @@
+import 'package:chat_app/utils/square_title.dart';
+
 import '../barrel/export.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -88,6 +90,36 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(
                   height: 25,
                 ),
+                // or continue with
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Divider(
+                          thickness: 0.5,
+                          color: Colors.grey[400],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Text('Or continue with',style: TextStyle(color: Colors.grey),),
+                      ),
+                      Expanded(
+                        child: Divider(
+                          thickness: 0.5,
+                          color: Colors.grey[400],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 50,),
+                // google sign in button
+                Center(
+                  child: SquareTile(imagePath: 'assets/images/google.png',),
+                ),
+                const SizedBox(height: 10),
                 // not a member? register now
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
