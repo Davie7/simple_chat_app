@@ -125,7 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: SquareTile(
                       imagePath: 'assets/images/google.png',
                       onTap: () async{
-                        AuthService().signInWithGoogle(context);
+                        AuthService().signInWithGoogle();
                       
                       }),
                 ),

@@ -53,7 +53,7 @@ class AuthService extends ChangeNotifier {
   }
 
   // Google Sign in
-  signInWithGoogle(context) async {
+  signInWithGoogle() async {
     // begin interactive sign in process
     final GoogleSignInAccount? gUser = await GoogleSignIn().signIn();
 
@@ -68,7 +68,6 @@ class AuthService extends ChangeNotifier {
     // sign in
     await FirebaseAuth.instance.signInWithCredential(credential);
 
-    // navigate to the home screen
-    Navigator.of(context).push(MaterialPageRoute(builder: (context)=> HomeScreen()));
+    
   }
 }
