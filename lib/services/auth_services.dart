@@ -51,4 +51,24 @@ class AuthService extends ChangeNotifier {
       throw Exception(e.code);
     }
   }
+
+  // Google Sign in
+  signInWithGoogle(context) async {
+    // begin interactive sign in process
+    final GoogleSignInAccount? gUser = await GoogleSignIn().signIn();
+
+    // obtain auth details from request
+    final GoogleSignInAuthentication gAuth = await gUser!.authentication;
+
+    // create a new credential for user
+    final credential = GoogleAuthProvider.credential(
+      accessToken: gAuth.accessToken,
+      idToken: gAuth.idToken,
+    );
+    // sign in
+    await FirebaseAuth.instance.signInWithCredential(credential);
+
+    // navigate to the home screen
+    Navigator.of(context).push(MaterialPageRoute(builder: (context)=> HomeScreen()));
+  }
 }

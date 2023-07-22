@@ -103,7 +103,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Text('Or continue with',style: TextStyle(color: Colors.grey),),
+                        child: Text(
+                          'Or continue with',
+                          style: TextStyle(color: Colors.grey),
+                        ),
                       ),
                       Expanded(
                         child: Divider(
@@ -114,10 +117,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 50,),
+                const SizedBox(
+                  height: 50,
+                ),
                 // google sign in button
                 Center(
-                  child: SquareTile(imagePath: 'assets/images/google.png',),
+                  child: SquareTile(
+                      imagePath: 'assets/images/google.png',
+                      onTap: () async{
+                        AuthService().signInWithGoogle(context);
+                      
+                      }),
                 ),
                 const SizedBox(height: 10),
                 // not a member? register now

@@ -3,7 +3,7 @@ import 'package:chat_app/barrel/export.dart';
 class SquareTile extends StatelessWidget {
   final String imagePath;
   final void Function()? onTap;
-  const SquareTile({super.key, required this.imagePath, this.onTap});
+  const SquareTile({super.key, required this.imagePath, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
