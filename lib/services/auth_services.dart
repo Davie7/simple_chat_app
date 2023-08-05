@@ -52,22 +52,51 @@ class AuthService extends ChangeNotifier {
     }
   }
 
+  // // Google Sign in
+  // signInWithGoogle() async {
+  //   // begin interactive sign in process
+  //   final GoogleSignInAccount? gUser = await GoogleSignIn().signIn();
+
+  //   // obtain auth details from request
+  //   final GoogleSignInAuthentication gAuth = await gUser!.authentication;
+
+  //   // create a new credential for user
+  //   final credential = GoogleAuthProvider.credential(
+  //     accessToken: gAuth.accessToken,
+  //     idToken: gAuth.idToken,
+  //   );
+  //   // sign in
+  //   await FirebaseAuth.instance.signInWithCredential(credential);
+
+    
+  // }
+
   // Google Sign in
-  signInWithGoogle() async {
-    // begin interactive sign in process
-    final GoogleSignInAccount? gUser = await GoogleSignIn().signIn();
+Future<UserCredential?> signInWithGoogle() async {
+  // begin interactive sign in process
+  final GoogleSignInAccount? gUser = await GoogleSignIn().signIn();
 
+  if (gUser == null) {
+    // User canceled the Google sign-in process
+    return null;
+  }
+
+  try {
     // obtain auth details from request
-    final GoogleSignInAuthentication gAuth = await gUser!.authentication;
+    final GoogleSignInAuthentication gAuth = await gUser.authentication;
 
-    // create a new credential for user
+    // create a new credential for the user
     final credential = GoogleAuthProvider.credential(
       accessToken: gAuth.accessToken,
       idToken: gAuth.idToken,
     );
-    // sign in
-    await FirebaseAuth.instance.signInWithCredential(credential);
 
-    
+    // sign in with the credential
+    return await FirebaseAuth.instance.signInWithCredential(credential);
+  } catch (e) {
+    // Handle any errors that might occur during the sign-in process
+    throw Exception(e.toString());
   }
+}
+
 }

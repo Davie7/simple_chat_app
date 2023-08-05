@@ -123,11 +123,29 @@ class _LoginScreenState extends State<LoginScreen> {
                 // google sign in button
                 Center(
                   child: SquareTile(
-                      imagePath: 'assets/images/google.png',
-                      onTap: () async{
-                        AuthService().signInWithGoogle();
-                      
-                      }),
+                    imagePath: 'assets/images/google.png',
+                    onTap:
+                        // () async {
+                        //   AuthService().signInWithGoogle();
+                        // },
+                        () async {
+                      UserCredential? userCredential =
+                          await AuthService().signInWithGoogle();
+                      if (userCredential != null) {
+                        // Successfully signed in with Google, navigate to the home screen.
+                        // Replace 'HomeScreen' with the name of your home screen route.
+                        Navigator.pushReplacementNamed(context, '/home');
+                      } else {
+                        // User canceled the Google sign-in process or an error occurred.
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                                "Google sign-in was canceled or an error occurred."),
+                          ),
+                        );
+                      }
+                    },
+                  ),
                 ),
                 const SizedBox(height: 10),
                 // not a member? register now
